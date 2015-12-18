@@ -17,6 +17,8 @@ public class MenuState extends State {
     public MenuState(seed.seyfer.game.states.GameStateManager gameStateManager) {
         super(gameStateManager);
 
+        camera.setToOrtho(false, FlappyDemo.WIDTH / 2, FlappyDemo.HEIGHT / 2);
+
         background = new Texture("bg.png");
         playBtn = new Texture("playbtn.png");
     }
@@ -35,9 +37,15 @@ public class MenuState extends State {
 
     @Override
     public void render(SpriteBatch spriteBatch) {
+        spriteBatch.setProjectionMatrix(camera.combined);
+
         spriteBatch.begin();
-        spriteBatch.draw(background, 0, 0, FlappyDemo.WIDTH, FlappyDemo.HEIGHT);
-        spriteBatch.draw(playBtn, (FlappyDemo.WIDTH / 2) - (playBtn.getWidth() / 2), FlappyDemo.HEIGHT / 2);
+//        spriteBatch.draw(background, 0, 0, FlappyDemo.WIDTH, FlappyDemo.HEIGHT);
+//        spriteBatch.draw(playBtn, (FlappyDemo.WIDTH / 2) - (playBtn.getWidth() / 2), FlappyDemo.HEIGHT / 2);
+
+        spriteBatch.draw(background, 0, 0);
+        spriteBatch.draw(playBtn, camera.position.x - (playBtn.getWidth() / 2), camera.position.y);
+
         spriteBatch.end();
     }
 

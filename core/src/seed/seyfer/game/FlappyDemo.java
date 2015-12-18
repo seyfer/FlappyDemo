@@ -2,6 +2,7 @@ package seed.seyfer.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -9,6 +10,7 @@ import seed.seyfer.game.states.GameStateManager;
 import seed.seyfer.game.states.MenuState;
 
 public class FlappyDemo extends ApplicationAdapter {
+
 
     public static final int WIDTH  = 480;
     public static final int HEIGHT = 800;
@@ -18,13 +20,16 @@ public class FlappyDemo extends ApplicationAdapter {
     private GameStateManager gameStateManager;
 
     private SpriteBatch batch;
-//    private Texture     img;
+    private Music       music;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
-//        img = new Texture("badlogic.jpg");
         gameStateManager = new GameStateManager();
+        music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.1f);
+        music.play();
 
         Gdx.gl.glClearColor(1, 0, 0, 1);
 
@@ -38,9 +43,11 @@ public class FlappyDemo extends ApplicationAdapter {
 
         gameStateManager.update(Gdx.graphics.getDeltaTime());
         gameStateManager.render(batch);
+    }
 
-//        batch.begin();
-//        batch.draw(img, 0, 0);
-//        batch.end();
+    @Override
+    public void dispose() {
+        super.dispose();
+        music.dispose();
     }
 }
